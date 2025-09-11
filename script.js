@@ -26,7 +26,8 @@ form.addEventListener('submit', async function (e) {
         const response = await fetch(scriptURL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(registrationData)
+            body: JSON.stringify(registrationData),
+            mode: 'no-cors'
         });
 
         const result = await response.json();
@@ -47,4 +48,5 @@ form.addEventListener('submit', async function (e) {
         submitBtn.textContent = 'EXECUTE REGISTRATION.EXE';
     }
 });
+
 
