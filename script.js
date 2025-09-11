@@ -3,7 +3,7 @@ const submitBtn = document.getElementById('submitBtn');
 const successScreen = document.getElementById('successScreen');
 const registrationForm = document.getElementById('registrationForm');
 
-// Your Google Apps Script Web App URL
+// Google Apps Script Web App URL
 const scriptURL = "https://script.google.com/macros/s/AKfycbxzn0pO3K0xRdKFMjaEDotHBv9ATo6z5n-QJrdDduNc1aklVJycE6G7-_2zbSH9Z_d-/exec";
 
 form.addEventListener('submit', async function (e) {
@@ -19,20 +19,21 @@ form.addEventListener('submit', async function (e) {
         languages: formData.get('programmingLanguages')
     };
 
-    // Disable button while processing
     submitBtn.disabled = true;
     submitBtn.textContent = 'PROCESSING...';
 
     try {
-        // Send data to Google Apps Script
         await fetch(scriptURL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(registrationData),
-            mode: 'no-cors' // prevents CORS issues
+            mode: 'no-cors' // avoids CORS issues
         });
 
-        // Show success screen (cannot read response in no-cors mode)
+        // Show alert for successful submission
+        alert('✅ Registration complete!');
+        
+        // Show success screen
         registrationForm.classList.add('hidden');
         successScreen.classList.remove('hidden');
         form.reset();
