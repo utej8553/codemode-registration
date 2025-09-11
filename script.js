@@ -4,7 +4,7 @@ const successScreen = document.getElementById('successScreen');
 const registrationForm = document.getElementById('registrationForm');
 
 // Your Google Apps Script Web App URL
-const scriptURL = "https://script.google.com/macros/s/AKfycbzrNrJ0AO6v3Harz7dfVErT6HoNfq94PRB3x6eiLFWGiyHMSrNsySbpHWWSVW9DZx3j/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbxzn0pO3K0xRdKFMjaEDotHBv9ATo6z5n-QJrdDduNc1aklVJycE6G7-_2zbSH9Z_d-/exec";
 
 form.addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -47,3 +47,4 @@ form.addEventListener('submit', async function (e) {
         submitBtn.textContent = 'EXECUTE REGISTRATION.EXE';
     }
 });
+
