@@ -9,9 +9,9 @@ form.addEventListener('submit', async function (e) {
         name: formData.get('name'),
         email: formData.get('email'),
         phone: formData.get('phone'),
-        rollno: formData.get('rollno'),
+        rollNumber: formData.get('rollno'),   // match Apps Script field
         experience: formData.get('experience'),
-        programmingLanguages: formData.get('programmingLanguages')
+        languages: formData.get('programmingLanguages') // match Apps Script field
     };
 
     submitBtn.disabled = true;
@@ -24,12 +24,13 @@ form.addEventListener('submit', async function (e) {
             body: JSON.stringify(registrationData)
         });
 
-        if (response.ok) {
-            alert('✅ Registered successfully!');
+        const result = await response.json();
+
+        if (response.ok && result.status === "success") {
+            alert('✅ ' + result.message);
             form.reset();
         } else {
-            const errorText = await response.text();
-            alert('❌ Failed to register: ' + errorText);
+            alert('❌ Failed to register: ' + (result.message || 'Unknown error'));
         }
     } catch (error) {
         console.error('Error:', error);
@@ -39,4 +40,3 @@ form.addEventListener('submit', async function (e) {
         submitBtn.textContent = 'EXECUTE REGISTRATION.EXE';
     }
 });
-
