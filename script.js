@@ -19,27 +19,24 @@ form.addEventListener('submit', async function (e) {
         languages: formData.get('programmingLanguages')
     };
 
+    // Disable button while processing
     submitBtn.disabled = true;
     submitBtn.textContent = 'PROCESSING...';
 
     try {
-        const response = await fetch(scriptURL, {
+        // Send data to Google Apps Script
+        await fetch(scriptURL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(registrationData),
-            mode: 'no-cors'
+            mode: 'no-cors' // prevents CORS issues
         });
 
-        const result = await response.json();
+        // Show success screen (cannot read response in no-cors mode)
+        registrationForm.classList.add('hidden');
+        successScreen.classList.remove('hidden');
+        form.reset();
 
-        if (result.status === "success") {
-            // Show success screen
-            registrationForm.classList.add('hidden');
-            successScreen.classList.remove('hidden');
-            form.reset();
-        } else {
-            alert('❌ Failed to register: ' + (result.message || 'Unknown error'));
-        }
     } catch (error) {
         console.error('Error:', error);
         alert('⚠️ Could not connect to server.');
@@ -48,5 +45,3 @@ form.addEventListener('submit', async function (e) {
         submitBtn.textContent = 'EXECUTE REGISTRATION.EXE';
     }
 });
-
-
