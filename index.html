@@ -13,11 +13,8 @@
   <style>
     :root{
       --bg:#071018;
-      --card:#0b1720;
       --accent:#38c6ff;
       --muted:#98a3ad;
-      --glass: rgba(255,255,255,0.03);
-      --success:#ffd166;
     }
 
     /* Reset */
@@ -34,12 +31,12 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:28px;
+      padding:20px;
     }
 
     .wrap{
       width:100%;
-      max-width:980px;
+      max-width:1000px;
       background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
       border-radius:14px;
       box-shadow: 0 10px 30px rgba(2,8,15,0.6);
@@ -49,11 +46,8 @@
       grid-template-columns: 1fr 420px;
     }
 
-    /* Left: big terminal info */
     .left {
       padding:34px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.008), transparent);
       display:flex;
       flex-direction:column;
       gap:20px;
@@ -86,7 +80,6 @@
       border-radius:10px;
       background: linear-gradient(180deg, rgba(12,28,36,0.6), rgba(6,14,18,0.5));
       border:1px solid rgba(56,198,255,0.06);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
     }
 
     .postponed-badge{
@@ -99,7 +92,6 @@
       font-size:12px;
       letter-spacing:0.6px;
       margin-bottom:12px;
-      box-shadow: 0 6px 18px rgba(255,157,28,0.12);
     }
 
     .headline {
@@ -123,16 +115,13 @@
       font-size:13px;
       line-height:1.6;
       border:1px solid rgba(255,255,255,0.02);
-      box-shadow: 0 10px 40px rgba(3,10,16,0.7);
     }
 
     .terminal p{margin-bottom:8px}
     .muted{color:var(--muted);font-size:12px}
 
-    /* Right: success / visual */
     .right {
       padding:28px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -142,18 +131,17 @@
     }
 
     .trophy{
-      width:120px;
-      height:120px;
+      width:100px;
+      height:100px;
       border-radius:16px;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:44px;
+      font-size:42px;
       background: linear-gradient(180deg,#112233, #0b1822);
       border:1px solid rgba(255,255,255,0.03);
       box-shadow: 0 18px 40px rgba(2,8,15,0.6);
     }
-    .trophy small{display:block;font-size:12px;color:var(--muted)}
 
     .big-message{
       font-size:18px;
@@ -161,11 +149,6 @@
       text-align:center;
       color:#ffdede;
       letter-spacing:0.4px;
-    }
-
-    .cta {
-      margin-top:6px;
-      text-align:center;
     }
 
     .cta .stay{
@@ -177,6 +160,7 @@
       border:1px dashed rgba(56,198,255,0.12);
       font-weight:700;
       font-size:13px;
+      text-align:center;
     }
 
     .contact {
@@ -190,76 +174,89 @@
       grid-column:1 / -1;
       padding:12px 24px;
       border-top:1px solid rgba(255,255,255,0.02);
-      background:linear-gradient(180deg, rgba(255,255,255,0.00), rgba(255,255,255,0.01));
       color:var(--muted);
       display:flex;
       justify-content:space-between;
       gap:12px;
       align-items:center;
       font-size:12px;
+      flex-wrap:wrap;
     }
 
-    /* small screens: single column */
-    @media (max-width:880px){
-      .wrap{grid-template-columns:1fr; padding:12px}
-      .right{order:2}
-      footer{flex-direction:column;align-items:flex-start;gap:6px}
+    /* Responsive */
+    @media (max-width:900px){
+      .wrap{
+        grid-template-columns:1fr;
+      }
+      .left, .right {
+        padding:24px;
+      }
+      .right {
+        border-left:none;
+        border-top:1px solid rgba(255,255,255,0.02);
+      }
+      .brand .icon{font-size:36px;}
+      .brand h1{font-size:18px;}
+      .headline{font-size:24px;}
+      .trophy{width:80px;height:80px;font-size:32px;}
+      .big-message{font-size:16px;}
     }
 
+    @media (max-width:500px){
+      body{padding:10px}
+      .headline{font-size:20px;}
+      .terminal{font-size:12px;padding:14px;}
+      .cta .stay{font-size:12px;padding:8px 12px;}
+      .contact{font-size:11px}
+    }
   </style>
 </head>
 <body>
-  <div class="wrap" role="main" aria-labelledby="title">
+  <div class="wrap" role="main">
     <div class="left">
       <div class="brand">
         <div class="icon">🖥️</div>
         <div>
-          <h1 id="title">CODECRACK · CODE '25</h1>
+          <h1>CODECRACK · CODE '25</h1>
           <p>Registration portal — Event status update</p>
         </div>
       </div>
 
-      <div class="notice-card" role="status" aria-live="polite">
+      <div class="notice-card">
         <span class="postponed-badge">OFFICIAL NOTICE</span>
         <div class="headline">Hackathon Postponed</div>
-        <div class="subhead">We're sorry for the inconvenience — the CODE '25 coding contest has been postponed. Please check this page again for the new date.</div>
+        <div class="subhead">We’re sorry — the CODE '25 coding contest has been postponed. Please check this page again for the new date.</div>
 
-        <div class="terminal" aria-hidden="false">
+        <div class="terminal">
           <p>&gt;&gt;&gt; STATUS: <strong>POSTPONED</strong></p>
           <p class="muted">&gt;&gt;&gt; REASON: Scheduling conflict & logistics update</p>
           <p class="muted">&gt;&gt;&gt; NEXT STEPS: Organizers will announce a rescheduled date soon</p>
           <hr style="border:none;border-top:1px dashed rgba(255,255,255,0.03);margin:10px 0">
           <p>&gt;&gt;&gt; WHAT YOU SHOULD DO:</p>
           <ul style="margin-left:16px;margin-top:8px;color:#bfe9ff">
-            <li>Follow official silicon synapses group for updates.</li>
+            <li>Follow official channels for updates.</li>
             <li>Keep your registration info — no action required.</li>
-            <li>If you need immediate help, contact the team below.</li>
+            <li>If needed, contact the team below.</li>
           </ul>
         </div>
       </div>
     </div>
 
-    <div class="right" aria-hidden="false">
-      <div class="trophy" title="Postponed">
-        🛑
-        <small style="margin-left:10px; font-size:11px; color:var(--muted);">EVENT</small>
-      </div>
-
+    <div class="right">
+      <div class="trophy">🛑</div>
       <div class="big-message">THIS HACKATHON IS POSTPONED</div>
-
       <div class="cta">
         <span class="stay">STAY TUNED — NEW DATE COMING SOON</span>
       </div>
-
       <div class="contact">
-        <div>Organizers: Sudeep (Lead) • +91 70136 80993</div>
-        <div>SubLead: Utej • +91 77807 08758</div>
+        <div>Sudeep (Lead): +91 70136 80993</div>
+        <div>Utej (SubLead): +91 77807 08758</div>
       </div>
     </div>
 
     <footer>
       <div>© 2024–2026 CodeMode</div>
-      <div>Questions? Email: <span style="color:var(--accent)">utej21631@gmail.com</span></div>
+      <div>codemode@college.example</div>
     </footer>
   </div>
 </body>
