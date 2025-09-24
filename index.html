@@ -1,263 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CODE '25 — Postponed</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Great Code-Off</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117;
+            color: #e6edf3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            text-align: center;
+        }
 
-  <!-- JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+        .hero {
+            margin-bottom: 2rem;
+            animation: fadeIn 2s ease-in-out;
+        }
 
-  <style>
-    :root{
-      --bg:#071018;
-      --accent:#38c6ff;
-      --muted:#98a3ad;
-    }
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #58a6ff;
+            animation: scaleIn 1s ease-out;
+        }
 
-    /* Reset */
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      font-family: "JetBrains Mono", monospace;
-      background:
-        radial-gradient(1200px 500px at 10% 10%, rgba(56,198,255,0.04), transparent 10%),
-        linear-gradient(180deg, #031021 0%, #061423 100%);
-      color:#e6eef6;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-    }
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
 
-    .wrap{
-      width:100%;
-      max-width:1000px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:14px;
-      box-shadow: 0 10px 30px rgba(2,8,15,0.6);
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,0.03);
-      display:grid;
-      grid-template-columns: 1fr 420px;
-    }
+        .countdown {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-    .left {
-      padding:34px;
-      display:flex;
-      flex-direction:column;
-      gap:20px;
-    }
+        .timer-box {
+            text-align: center;
+            background-color: #161b22;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            border: 2px solid #30363d;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+        }
 
-    .brand {
-      display:flex;
-      gap:14px;
-      align-items:center;
-    }
-    .brand .icon{
-      font-size:44px;
-      filter:drop-shadow(0 6px 18px rgba(0,0,0,0.6));
-    }
-    .brand h1{
-      font-size:20px;
-      letter-spacing:1px;
-      font-weight:700;
-      color:var(--accent);
-    }
-    .brand p{
-      font-size:11px;
-      color:var(--muted);
-      margin-top:4px;
-    }
+        .timer-box:hover {
+            transform: translateY(-5px);
+        }
 
-    .notice-card{
-      margin-top:6px;
-      padding:22px;
-      border-radius:10px;
-      background: linear-gradient(180deg, rgba(12,28,36,0.6), rgba(6,14,18,0.5));
-      border:1px solid rgba(56,198,255,0.06);
-    }
+        .timer-box span:first-child {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #8b949e;
+        }
 
-    .postponed-badge{
-      display:inline-block;
-      padding:8px 12px;
-      border-radius:999px;
-      background: linear-gradient(90deg,#ff9f1c,#ffd166);
-      color:#08121a;
-      font-weight:700;
-      font-size:12px;
-      letter-spacing:0.6px;
-      margin-bottom:12px;
-    }
+        .register-button {
+            padding: 1rem 2.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            background-color: #58a6ff;
+            color: #0d1117;
+            margin-top: 2rem;
+        }
 
-    .headline {
-      font-size:28px;
-      font-weight:700;
-      color:#f8f9fb;
-      margin-bottom:6px;
-    }
+        .register-button:not(.disabled-btn):hover {
+            background-color: #79c0ff;
+            transform: scale(1.05);
+        }
 
-    .subhead {
-      color:var(--muted);
-      font-size:13px;
-      margin-bottom:14px;
-    }
+        .disabled-btn {
+            background-color: #30363d;
+            color: #8b949e;
+            cursor: not-allowed;
+            animation: none;
+        }
 
-    .terminal {
-      background:linear-gradient(180deg,#04121a,#07202a);
-      border-radius:10px;
-      padding:18px;
-      color:#bfe9ff;
-      font-size:13px;
-      line-height:1.6;
-      border:1px solid rgba(255,255,255,0.02);
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-    .terminal p{margin-bottom:8px}
-    .muted{color:var(--muted);font-size:12px}
+        @keyframes scaleIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
 
-    .right {
-      padding:28px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:18px;
-      border-left:1px solid rgba(255,255,255,0.02);
-    }
-
-    .trophy{
-      width:100px;
-      height:100px;
-      border-radius:16px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:42px;
-      background: linear-gradient(180deg,#112233, #0b1822);
-      border:1px solid rgba(255,255,255,0.03);
-      box-shadow: 0 18px 40px rgba(2,8,15,0.6);
-    }
-
-    .big-message{
-      font-size:18px;
-      font-weight:700;
-      text-align:center;
-      color:#ffdede;
-      letter-spacing:0.4px;
-    }
-
-    .cta .stay{
-      display:inline-block;
-      padding:10px 16px;
-      border-radius:8px;
-      background:transparent;
-      color:var(--accent);
-      border:1px dashed rgba(56,198,255,0.12);
-      font-weight:700;
-      font-size:13px;
-      text-align:center;
-    }
-
-    .contact {
-      margin-top:10px;
-      font-size:12px;
-      color:var(--muted);
-      text-align:center;
-    }
-
-    footer{
-      grid-column:1 / -1;
-      padding:12px 24px;
-      border-top:1px solid rgba(255,255,255,0.02);
-      color:var(--muted);
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:center;
-      font-size:12px;
-      flex-wrap:wrap;
-    }
-
-    /* Responsive */
-    @media (max-width:900px){
-      .wrap{
-        grid-template-columns:1fr;
-      }
-      .left, .right {
-        padding:24px;
-      }
-      .right {
-        border-left:none;
-        border-top:1px solid rgba(255,255,255,0.02);
-      }
-      .brand .icon{font-size:36px;}
-      .brand h1{font-size:18px;}
-      .headline{font-size:24px;}
-      .trophy{width:80px;height:80px;font-size:32px;}
-      .big-message{font-size:16px;}
-    }
-
-    @media (max-width:500px){
-      body{padding:10px}
-      .headline{font-size:20px;}
-      .terminal{font-size:12px;padding:14px;}
-      .cta .stay{font-size:12px;padding:8px 12px;}
-      .contact{font-size:11px}
-    }
-  </style>
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
 </head>
 <body>
-  <div class="wrap" role="main">
-    <div class="left">
-      <div class="brand">
-        <div class="icon">🖥️</div>
-        <div>
-          <h1>CODECRACK · CODE '25</h1>
-          <p>Registration portal — Event status update</p>
-        </div>
-      </div>
 
-      <div class="notice-card">
-        <span class="postponed-badge">OFFICIAL NOTICE</span>
-        <div class="headline">Hackathon Postponed</div>
-        <div class="subhead">We’re sorry — the CODE '25 coding contest has been postponed. Please check this page again for the new date.</div>
+    <header class="hero">
+        <h1>The Great Code-Off</h1>
+        <p class="subtitle">Place: Virtual | Time: September 26th, 9 PM IST</p>
+    </header>
 
-        <div class="terminal">
-          <p>&gt;&gt;&gt; STATUS: <strong>POSTPONED</strong></p>
-          <p class="muted">&gt;&gt;&gt; REASON: Scheduling conflict & logistics update</p>
-          <p class="muted">&gt;&gt;&gt; NEXT STEPS: Organizers will announce a rescheduled date soon</p>
-          <hr style="border:none;border-top:1px dashed rgba(255,255,255,0.03);margin:10px 0">
-          <p>&gt;&gt;&gt; WHAT YOU SHOULD DO:</p>
-          <ul style="margin-left:16px;margin-top:8px;color:#bfe9ff">
-            <li>Follow official channels for updates.</li>
-            <li>Keep your registration info — no action required.</li>
-            <li>If needed, contact the team below.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <main class="content">
+        <section class="timer-section">
+            <h2>Registration Starts In:</h2>
+            <div id="countdown" class="countdown">
+                <div class="timer-box">
+                    <span id="days">00</span>
+                    <span>Days</span>
+                </div>
+                <div class="timer-box">
+                    <span id="hours">00</span>
+                    <span>Hours</span>
+                </div>
+                <div class="timer-box">
+                    <span id="minutes">00</span>
+                    <span>Minutes</span>
+                </div>
+                <div class="timer-box">
+                    <span id="seconds">00</span>
+                    <span>Seconds</span>
+                </div>
+            </div>
+        </section>
 
-    <div class="right">
-      <div class="trophy">🛑</div>
-      <div class="big-message">THIS HACKATHON IS POSTPONED</div>
-      <div class="cta">
-        <span class="stay">STAY TUNED — NEW DATE COMING SOON</span>
-      </div>
-      <div class="contact">
-        <div>Sudeep (Lead): +91 70136 80993</div>
-        <div>Utej (SubLead): +91 77807 08758</div>
-      </div>
-    </div>
+        <section class="registration-section">
+            <button id="registerBtn" class="register-button disabled-btn" disabled>Registration starts on Sep 26th</button>
+        </section>
 
-    <footer>
-      <div>© 2024–2026 CodeMode</div>
-      <div>codemode@college.example</div>
-    </footer>
-  </div>
+    </main>
+
+    <script>
+        const registrationDate = new Date('September 26, 2025 21:00:00').getTime();
+
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = registrationDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days < 10 ? '0' + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? '0' + hours : hours;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById("seconds").innerHTML = seconds < 10 ? '0' + seconds : seconds;
+
+            const registerBtn = document.getElementById("registerBtn");
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "Registration is Open! 🚀";
+                registerBtn.disabled = false;
+                registerBtn.classList.remove('disabled-btn');
+                registerBtn.innerHTML = "Register Now!";
+                registerBtn.style.animation = "pulse 1.5s infinite";
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
